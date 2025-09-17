@@ -1,35 +1,71 @@
-class LightButton {
-  render() {
-    return "Botão branco criado";
-  }
-}
-class DarkButton {
-  render() {
-    return "Botão preto criado";
+class ComponenteUI {
+  descrever() {
+    throw new Error("Este método deve ser implementado pela subclasse.");
   }
 }
 
-class LightWindow {
-  render() {
-    return "Janela clara aberta";
+class Botao extends ComponenteUI {}
+class Texto extends ComponenteUI {}
+
+
+class BotaoClaro extends Botao {
+  descrever() {
+    return "Componente: Botão | Tema: Claro";
   }
 }
-class DarkWindow {
-  render() {
-    return "Janela escura aberta";
+
+class TextoClaro extends Texto {
+  descrever() {
+    return "Componente: Texto | Tema: Claro";
   }
 }
 
-const theme = "dark";
-let button, windowUI;
 
-if (theme === "light") {
-  button = new LightButton();
-  windowUI = new LightWindow();
-} else {
-  button = new DarkButton();
-  windowUI = new DarkWindow();
+class BotaoEscuro extends Botao {
+  descrever() {
+    return "Componente: Botão | Tema: Escuro";
+  }
 }
 
-console.log(button.render());
-console.log(windowUI.render());
+class TextoEscuro extends Texto {
+  descrever() {
+    return "Componente: Texto | Tema: Escuro";
+  }
+}
+
+
+class FabricaDeUI {
+  criarBotao() {
+    throw new Error("Este método deve ser implementado pela subclasse.");
+  }
+
+  criarTexto() {
+    throw new Error("Este método deve ser implementado pela subclasse.");
+  }
+}
+
+
+class FabricaTemaClaro extends FabricaDeUI {
+  criarBotao() {
+    return new BotaoClaro();
+  }
+
+  criarTexto() {
+    return new TextoClaro();
+  }
+}
+
+class FabricaTemaEscuro extends FabricaDeUI {
+  criarBotao() {
+    return new BotaoEscuro();
+  }
+
+  criarTexto() {
+    return new TextoEscuro();
+  }
+}
+
+module.exports = {
+  FabricaTemaClaro,
+  FabricaTemaEscuro,
+};

@@ -2,35 +2,32 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
-  schedule:   
+    branches: [ main ]
+  schedule:
     - cron: '0 12 * * *'
 
 jobs:
-  build:
-    name: Run Node.js 01
+  build_and_test:
+    name: Build and Run Scripts
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v5.0.0    
-    - name: Use Node.js 21
+    - name: Checkout repository
+      uses: actions/checkout@v5.0.0
+      
+    - name: Use Node.js 22
       uses: actions/setup-node@v5.0.0
       with:
         node-version: 22
-        cache: 'npm'    
-    - run: npm install      
-    - run: npm run start01
-
-  build02:
-    name: Run Node.js 02
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v5.0.0
-    - name: Use Node.js 21
-      uses: actions/setup-node@v5.0.0
-      with:
-        node-version: 22
-        cache: 'npm'    
-    - run: npm install      
-    - run: npm run start02
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Run Abstract Factory Test
+      run: npm run start01
+      
+    - name: Run Builder Test
+      run: npm run start02
